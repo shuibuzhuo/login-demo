@@ -1,5 +1,10 @@
-import './assets/main.css'
-
+/*
+ * @Author: zhuotuo
+ * @Date: 2023-07-22 09:11:59
+ * @LastEditors: zhuotuo
+ * @LastEditTime: 2023-07-22 11:01:30
+ * @Description: 
+ */
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 

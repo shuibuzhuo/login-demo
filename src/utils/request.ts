@@ -1,4 +1,17 @@
-import axios from 'axios'
+/*
+ * @Author: zhuotuo
+ * @Date: 2023-07-22 09:11:59
+ * @LastEditors: zhuotuo
+ * @LastEditTime: 2023-07-22 11:15:18
+ * @Description: 
+ */
+import axios, { type AxiosRequestConfig } from 'axios'
+
+export type ResType<T = any> = {
+  msg: string
+  code: number
+  data: T
+}
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -12,9 +25,19 @@ service.interceptors.request.use((config) => {
 })
 
 service.interceptors.response.use((response) => {
-  return response
+  const { code, data, msg } = response.data as ResType
+
+  if (code === 200) {
+    return data
+  } else {
+    return Promise.reject(new Error(msg))
+  }
 }, (error) => {
   return Promise.reject(error)
 })
 
-export default service
+function request<T>(config: AxiosRequestConfig<T>): Promise<T> {
+  return service(config)
+}
+
+export default request
